@@ -146,10 +146,10 @@ else
     protos = {}
     if opt.model == 'lstm' then
         protos.rnn = LSTM.lstm(vocab_size, opt.rnn_size, opt.num_layers, opt.dropout)
-    elseif opt.model == 'gru' then
-        protos.rnn = GRU.gru(vocab_size, opt.rnn_size, opt.num_layers, opt.dropout)
-    elseif opt.model == 'rnn' then
-        protos.rnn = RNN.rnn(vocab_size, opt.rnn_size, opt.num_layers, opt.dropout)
+    -- elseif opt.model == 'gru' then
+    --     protos.rnn = GRU.gru(vocab_size, opt.rnn_size, opt.num_layers, opt.dropout)
+    -- elseif opt.model == 'rnn' then
+    --     protos.rnn = RNN.rnn(vocab_size, opt.rnn_size, opt.num_layers, opt.dropout)
     end
     protos.criterion = nn.ClassNLLCriterion()
 end
@@ -250,7 +250,9 @@ function eval_split(split_index, max_batches)
     return loss
 end
 
+--==============================================--
 -- do fwd/bwd and return loss, grad_params
+--==============================================--
 local init_state_global = clone_list(init_state)
 function feval(x)
     if x ~= params then
@@ -300,7 +302,9 @@ function feval(x)
     return loss, grad_params
 end
 
+--==============================================--
 -- start optimization here
+--==============================================--
 train_losses = {}
 val_losses = {}
 local optim_state = {learningRate = opt.learning_rate, alpha = opt.decay_rate}
